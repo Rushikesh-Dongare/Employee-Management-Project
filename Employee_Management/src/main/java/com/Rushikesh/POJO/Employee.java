@@ -2,17 +2,35 @@ package com.Rushikesh.POJO;
 
 import java.util.Scanner;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
+
+@Entity
 public abstract class Employee {
 	
 	static String companyName;
 	
+	@Transient
 	Scanner sc = new Scanner(System.in);
 	
+	@Id
 	int employeeId;
+	
+	@Column(name = "Employee Name")
 	String employeeName;
+	
+	@Column(name = "Total Experiance")
 	float totalExperiance;
+	
+	@Column(name = "Designation")
 	String designation;
+	
+	@Column(name = "Basic Salary")
 	double basicSalary;
+	
+	@Column(name = "Current Location")
 	String location;
 	
 	Employee()

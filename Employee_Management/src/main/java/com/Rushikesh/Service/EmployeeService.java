@@ -3,9 +3,32 @@ package com.Rushikesh.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+
+import com.Rushikesh.POJO.Admin;
 import com.Rushikesh.POJO.Employee;
+import com.Rushikesh.POJO.HRManager;
+import com.Rushikesh.POJO.Manager;
+import com.Rushikesh.POJO.SalesManager;
+import com.Rushikesh.POJO.TeamLeader;
+import com.mysql.cj.protocol.Security;
 
 public class EmployeeService {
+	
+	Configuration con = new Configuration()
+	        .configure()
+	        .addAnnotatedClass(Employee.class)
+	        .addAnnotatedClass(Manager.class)
+	        .addAnnotatedClass(Admin.class)
+	        .addAnnotatedClass(HRManager.class)
+	        .addAnnotatedClass(SalesManager.class)
+	        .addAnnotatedClass(TeamLeader.class)
+	        .addAnnotatedClass(Security.class);
+	SessionFactory factory = con.buildSessionFactory();
 	
 	List<Employee> AllEmployees = new ArrayList<Employee>();
 
@@ -19,6 +42,10 @@ public class EmployeeService {
 	
 	public boolean AddEmployee(Employee e)
 	{
+		Session session = factory.openSession();
+		
+		Transaction tr = session.beginTransaction();
+		
 		for(Employee emp: AllEmployees)
 		{
 			if(emp.getEmployeeId() == e.getEmployeeId())
@@ -27,31 +54,35 @@ public class EmployeeService {
 				return false;
 			}
 		}
-		AllEmployees.add(e);
-		System.out.println(AllEmployees.toString());
+		session.persist(e);
+		System.out.println("Added Sucessfully");
+		tr.commit();
 		return true;
 	}
 	
-	public List<Employee> RemoveEmployee(Employee e)
+	public boolean RemoveEmployee(int id)
 	{
-		AllEmployees.remove(e);
-		return AllEmployees;
+		Session session = factory.openSession();
+		Transaction tr = session.beginTransaction();
+		
+		Employee emp = session.find(Employee.class, id);
+		
+		if(emp != null)
+		{
+			session.remove(emp);
+			System.out.println("Object Removed Sucessfully!");
+			return true;
+		}
+		tr.commit();
+		return false;
 	}
 	
 	public Employee getEmployeeFromId(int id)
 	{
+		Session session = factory.openSession();
 		
-		for(Employee e: AllEmployees)
-		{
-			if(e.getEmployeeId() == id)
-			{
-				return e;
-			}
-			else {
-				return AllEmployees.getFirst();
-			}
-		}
-		return null;
+		return (Employee) session.find(Employee.class, id);
+		
 	}
 	
 }

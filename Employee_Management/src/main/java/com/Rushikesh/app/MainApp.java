@@ -88,7 +88,7 @@ public class MainApp {
                 int members = sc.nextInt();
 
                 // ⚠️ Replace with TeamLeader class later
-                Employee teamLeader = new Manager(
+                Employee teamLeader = new TeamLeader(
                 		base.getId(),
                         base.getName(),
                         base.getExperience(),
@@ -102,7 +102,7 @@ public class MainApp {
                 break;
                 
             case 3:
-                System.out.print("Enter team members: ");
+                System.out.print("Enter Taarget: ");
                 int target = sc.nextInt();
                 System.out.println("Enter Incentive after completing target: ");
                 int incentive = sc.nextInt();
@@ -255,32 +255,14 @@ public class MainApp {
 			System.out.println("List is Empty, No Employees Registered!");
 		}
 		
-		for(Employee e: service.getAllEmployees())
+		if(service.RemoveEmployee(id))
 		{
-			if(e.getEmployeeId() == id)
-			{
-				System.out.println("You Want to delete this employee: ");
-				System.out.println(e.getEmployeeName());
-				System.out.println();
-				System.out.println("Please confirm: ");
-				System.out.println("\t1. Yes");
-				System.out.println("\t2. No");
-				
-				int isYes = sc.nextInt();
-				
-				if(isYes == 1)
-				{
-					System.out.println(service.RemoveEmployee(e));;
-				}
-				else {
-					System.out.println("You Entered Wrong Choice");
-				}	
-			}
-			else {
-				System.out.println("This Employee Does not Exist in Our System");
-			}
+			System.out.println("Employee Removed from System");
 		}
-    }
+		else {
+			System.out.println("This Employee Does not Exist in Our System");
+		}
+	}
     
     public static void showAllEmployees()
     {

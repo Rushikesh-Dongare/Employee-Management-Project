@@ -1,5 +1,8 @@
 package com.Rushikesh.POJO;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Admin extends Employee {
 	public Admin()
 	{

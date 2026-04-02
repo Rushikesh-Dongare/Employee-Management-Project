@@ -1,6 +1,12 @@
 package com.Rushikesh.POJO;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+
+@Entity
 public class Security extends Employee {
+	
+	@Column(name = "Current Shift")
 	int currentShift;
 	
 	Security()

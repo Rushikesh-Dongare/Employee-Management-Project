@@ -1,7 +1,12 @@
 package com.Rushikesh.POJO;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 
+@Entity
 public class Manager extends Employee {
+	
+	@Column(name = "Total Teams Under Management")
 	 private int totalTeamsUnderManagement;
 	
 	public Manager()

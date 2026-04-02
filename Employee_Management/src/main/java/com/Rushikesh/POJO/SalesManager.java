@@ -1,7 +1,15 @@
 package com.Rushikesh.POJO;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+
+@Entity
 public class SalesManager extends Employee{
+	
+	@Column(name = "Monthly Target")
 	int target;
+	
+	@Column(name = "Incentive")
 	double incentive;
 	
 	public SalesManager()
