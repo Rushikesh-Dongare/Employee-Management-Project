@@ -36,6 +36,10 @@ public class Manager extends Employee {
 	           "=========================\n";
 	}
 
-	
+	@Override
+	public double calculateSalary() {
+	    double bonus = totalTeamsUnderManagement * 1000; // per team bonus
+	    return basicSalary + bonus;
+	}
 	
 }

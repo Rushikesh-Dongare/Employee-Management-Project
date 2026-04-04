@@ -48,4 +48,12 @@ public class Security extends Employee {
 		
 		return currentShift;
 	}
+	
+	@Override
+	public double calculateSalary() {
+//	    if (currentShift("Night")) {
+//	        return basicSalary + 2000;
+//	    }
+	    return basicSalary;
+	}
 }

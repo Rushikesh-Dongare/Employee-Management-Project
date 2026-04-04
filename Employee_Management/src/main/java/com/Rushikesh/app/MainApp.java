@@ -14,218 +14,90 @@ public class MainApp {
 
     public static void main(String[] args) {
 
-        System.out.println("Welcome");
-
         int choice = 0;
 
-        while (choice != 5) {
-            System.out.println("\nWhat do you want to do?");
+        while (choice != 8) {
+
+            System.out.println("\n===== Employee Management System =====");
             System.out.println("1. Add Employee");
             System.out.println("2. Remove Employee");
             System.out.println("3. View All Employees");
-            System.out.println("4. Exit");
+            System.out.println("4. Search Employee");
+            System.out.println("5. Pagination");
+            System.out.println("6. Sorting");
+            System.out.println("7. Dashboard / Analytics");
+            System.out.println("8. Exit");
 
             choice = sc.nextInt();
 
             switch (choice) {
-                case 1:
-                    addEmployee();
-                    break;
-
-                case 2:
-                    removeEmployee();
-                    break;
-
-                case 3:
-                    showAllEmployees();
-                    break;
-
-                case 4:
-                    System.out.println("Exiting...");
-                    return;
-                   
-                default:
-                    System.out.println("Invalid choice!");
+                case 1: addEmployee(); break;
+                case 2: removeEmployee(); break;
+                case 3: showAllEmployees(); break;
+                case 4: searchEmployee(); break;
+                case 5: paginateEmployees(); break;
+                case 6: sortEmployees(); break;
+                case 7: dashboard(); break;
+                case 8: System.out.println("Exiting..."); return;
+                default: System.out.println("Invalid choice!");
             }
         }
     }
 
+    // ================= ADD =================
     static void addEmployee() {
 
-        System.out.println("\nChoose Employee Type:");
-        System.out.println("1. Manager");
-        System.out.println("2. Team Leader");
-        System.out.println("3. Sales Manager");
-        System.out.println("4. Admin");
-        System.out.println("5. HR Manager");
-
+        System.out.println("\n1. Manager\n2. Team Leader\n3. Sales Manager\n4. Admin\n5. HR Manager");
         int choice = sc.nextInt();
 
-        // ✅ Get common data once
         EmployeeData base = getBasicDetails();
 
         switch (choice) {
-
             case 1:
-                System.out.print("Enter number of teams: ");
-                int teams = sc.nextInt();
-
-                Employee manager = new Manager(
-                        base.getId(),
-                        base.getName(),
-                        base.getExperience(),
-                        base.getDesignation(),
-                        base.getSalary(),
-                        base.getLocation(),
-                        teams
-                );
-
-                service.AddEmployee(manager);
+                System.out.print("Teams: ");
+                service.AddEmployee(new Manager(base.getId(), base.getName(), base.getExperience(),
+                        base.getDesignation(), base.getSalary(), base.getLocation(), sc.nextInt()));
                 break;
 
             case 2:
-                System.out.print("Enter team members: ");
-                int members = sc.nextInt();
-
-                // ⚠️ Replace with TeamLeader class later
-                Employee teamLeader = new TeamLeader(
-                		base.getId(),
-                        base.getName(),
-                        base.getExperience(),
-                        base.getDesignation(),
-                        base.getSalary(),
-                        base.getLocation(),
-                        members
-                );
-
-                service.AddEmployee(teamLeader);
+                System.out.print("Members: ");
+                service.AddEmployee(new TeamLeader(base.getId(), base.getName(), base.getExperience(),
+                        base.getDesignation(), base.getSalary(), base.getLocation(), sc.nextInt()));
                 break;
-                
+
             case 3:
-                System.out.print("Enter Taarget: ");
+                System.out.print("Target: ");
                 int target = sc.nextInt();
-                System.out.println("Enter Incentive after completing target: ");
-                int incentive = sc.nextInt();
+                System.out.print("Incentive: ");
+                int inc = sc.nextInt();
 
-                // ⚠️ Replace with TeamLeader class later
-                Employee salesManager = new SalesManager(
-                		base.getId(),
-                        base.getName(),
-                        base.getExperience(),
-                        base.getDesignation(),
-                        base.getSalary(),
-                        base.getLocation(),
-                        target,
-                        incentive
-                );
-
-                service.AddEmployee(salesManager);
+                service.AddEmployee(new SalesManager(base.getId(), base.getName(), base.getExperience(),
+                        base.getDesignation(), base.getSalary(), base.getLocation(), target, inc));
                 break;
 
             case 4:
-                Employee admin = new Admin(
-                		base.getId(),
-                        base.getName(),
-                        base.getExperience(),
-                        base.getDesignation(),
-                        base.getSalary(),
-                        base.getLocation()
-                );
-
-                service.AddEmployee(admin);
+                service.AddEmployee(new Admin(base.getId(), base.getName(), base.getExperience(),
+                        base.getDesignation(), base.getSalary(), base.getLocation()));
                 break;
-             
+
             case 5:
-            	System.out.println("Enter total Employees Handeled by this HR");
-            	int employees = sc.nextInt();
-                Employee hrManager = new HRManager(
-                		base.getId(),
-                        base.getName(),
-                        base.getExperience(),
-                        base.getDesignation(),
-                        base.getSalary(),
-                        base.getLocation(),
-                        employees
-                );
-
-                service.AddEmployee(hrManager);
+                System.out.print("Employees Managed: ");
+                service.AddEmployee(new HRManager(base.getId(), base.getName(), base.getExperience(),
+                        base.getDesignation(), base.getSalary(), base.getLocation(), sc.nextInt()));
                 break;
-                
-            default:
-                System.out.println("Invalid choice!");
         }
     }
-    static Manager getManagerDetails() {
 
-        System.out.println("\n--- Enter Manager Details ---");
-
-        System.out.print("Enter ID: ");
-        int id = sc.nextInt();
-        sc.nextLine(); // fix buffer issue
-
-        System.out.print("Enter Name: ");
-        String name = sc.nextLine();
-
-        System.out.print("Experience: ");
-        float experience = sc.nextFloat();
-        sc.nextLine();
-
-        System.out.print("Designation: ");
-        String designation = sc.nextLine();
-
-        System.out.print("Salary: ");
-        double salary = sc.nextDouble();
-        sc.nextLine();
-
-        System.out.print("Location: ");
-        String location = sc.nextLine();
-
-        System.out.print("Teams under manager: ");
-        int teams = sc.nextInt();
-
-        return new Manager(id, name, experience, designation, salary, location, teams);
-    }
-
-    static Employee getTeamLeaderDetails() {
-
-        System.out.println("\n--- Enter Team Leader Details ---");
-
-        System.out.print("Enter ID: ");
-        int id = sc.nextInt();
-        sc.nextLine();
-
-        System.out.print("Enter Name: ");
-        String name = sc.nextLine();
-
-        System.out.print("Experience: ");
-        float experience = sc.nextFloat();
-        sc.nextLine();
-
-        System.out.print("Designation: ");
-        String designation = sc.nextLine();
-
-        System.out.print("Salary: ");
-        double salary = sc.nextDouble();
-        sc.nextLine();
-
-        System.out.print("Location: ");
-        String location = sc.nextLine();
-
-        System.out.print("Team Members: ");
-        int teamMembers = sc.nextInt();
-
-        // ⚠️ You should ideally use TeamLeader class here
-        return new Manager(id, name, experience, designation, salary, location, teamMembers);
-    }
-    
+    // ================= BASIC INPUT =================
     static EmployeeData getBasicDetails() {
+
         EmployeeData data = new EmployeeData();
 
-        System.out.print("Enter ID: ");
+        System.out.print("ID: ");
         data.setId(sc.nextInt());
         sc.nextLine();
 
-        System.out.print("Enter Name: ");
+        System.out.print("Name: ");
         data.setName(sc.nextLine());
 
         System.out.print("Experience: ");
@@ -244,41 +116,129 @@ public class MainApp {
 
         return data;
     }
-    
-    static void removeEmployee()
-    {
-    	System.out.println("Enter ID of an Employee you want to remove: ");
-    	int id = sc.nextInt();
-    	
-    	if(service.getAllEmployees().isEmpty())
-		{
-			System.out.println("List is Empty, No Employees Registered!");
-		}
-		
-		if(service.RemoveEmployee(id))
-		{
-			System.out.println("Employee Removed from System");
-		}
-		else {
-			System.out.println("This Employee Does not Exist in Our System");
-		}
-	}
-    
-    public static void showAllEmployees()
-    {
-    	List<Employee> empList = service.getAllEmployees();
-    	
-    	for(Employee e: empList)
-    	{
-    		System.out.println(e.toString());
-    	}
+
+    // ================= REMOVE =================
+    static void removeEmployee() {
+        System.out.print("Enter ID: ");
+        if (service.RemoveEmployee(sc.nextInt()))
+            System.out.println("Removed!");
+        else
+            System.out.println("Not found!");
     }
-    
-    static void searchById()
-    {
-    	System.out.println("Enter an Employee id: ");
-    	int id = sc.nextInt();
-    	
-    	Employee e = service.getEmployeeFromId(id);
+
+    // ================= VIEW =================
+    static void showAllEmployees() {
+        printList(service.getAllEmployees());
+    }
+
+    // ================= SEARCH =================
+    static void searchEmployee() {
+
+        System.out.println("\n1. ID\n2. Name\n3. Designation\n4. Salary Range");
+        int choice = sc.nextInt();
+
+        switch (choice) {
+            case 1:
+                System.out.print("ID: ");
+                System.out.println(service.getEmployeeFromId(sc.nextInt()));
+                break;
+
+            case 2:
+                sc.nextLine();
+                System.out.print("Name: ");
+                printList(service.searchByName(sc.nextLine()));
+                break;
+
+            case 3:
+                sc.nextLine();
+                System.out.print("Designation: ");
+                printList(service.searchByDesignation(sc.nextLine()));
+                break;
+
+            case 4:
+                System.out.print("Min Salary: ");
+                double min = sc.nextDouble();
+                System.out.print("Max Salary: ");
+                double max = sc.nextDouble();
+                printList(service.searchBySalary(min, max));
+                break;
+        }
+    }
+
+    // ================= PAGINATION =================
+    static void paginateEmployees() {
+
+        System.out.print("Enter page number: ");
+        int page = sc.nextInt();
+
+        System.out.print("Enter page size: ");
+        int size = sc.nextInt();
+
+        printList(service.getEmployeesWithPagination(page, size));
+    }
+
+    // ================= SORTING =================
+    static void sortEmployees() {
+
+        System.out.println("\nSort By:");
+        System.out.println("1. Salary");
+        System.out.println("2. Experience");
+        System.out.println("3. Name");
+
+        int choice = sc.nextInt();
+
+        switch (choice) {
+            case 1:
+                printList(service.sortBySalary());
+                break;
+
+            case 2:
+                printList(service.sortByExperience());
+                break;
+
+            case 3:
+                printList(service.sortByName());
+                break;
+        }
+    }
+
+    // ================= DASHBOARD =================
+    static void dashboard() {
+
+        System.out.println("\n===== DASHBOARD =====");
+
+        System.out.println("Total Employees: " + service.getTotalEmployees());
+        System.out.println("Average Salary: " + service.getAverageSalary());
+
+        System.out.println("\nHighest Paid Employee:");
+        System.out.println(service.getHighestSalaryEmployee());
+
+        System.out.println("\nEmployees By Role:");
+        service.countByDesignation().forEach((role, count) ->
+                System.out.println(role + " : " + count));
+    }
+
+    // ================= BUSINESS LOGIC =================
+    static void calculateSalary() {
+
+        System.out.print("Enter Employee ID: ");
+        int id = sc.nextInt();
+
+        double salary = service.calculateSalary(id);
+
+        System.out.println("Calculated Salary: " + salary);
+    }
+
+    // ================= HELPER =================
+    static void printList(List<Employee> list) {
+
+        if (list == null || list.isEmpty()) {
+            System.out.println("No Data Found!");
+            return;
+        }
+
+        for (Employee e : list) {
+            System.out.println(e);
+        }
     }
 }

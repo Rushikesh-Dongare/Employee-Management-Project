@@ -49,5 +49,9 @@ public class SalesManager extends Employee{
 	           "=========================\n";
 	}
 	
+	@Override
+	public double calculateSalary() {
+	    return basicSalary + incentive;
+	}
 	
 }

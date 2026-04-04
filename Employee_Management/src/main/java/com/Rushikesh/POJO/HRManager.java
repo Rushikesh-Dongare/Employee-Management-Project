@@ -36,6 +36,10 @@ public class HRManager extends Employee{
 	           "=========================\n";
 	}
 	
-	
+	@Override
+	public double calculateSalary() {
+	    double bonus = employeesUnder * 300;
+	    return basicSalary + bonus;
+	}
 	
 }

@@ -35,5 +35,10 @@ public class TeamLeader extends Employee {
 				+ ", basicSalary=" + basicSalary + ", location=" + location + "]";
 	}
 	
+	@Override
+	public double calculateSalary() {
+	    double bonus = totalTeamMembers * 500;
+	    return basicSalary + bonus;
+	}
 	
 }

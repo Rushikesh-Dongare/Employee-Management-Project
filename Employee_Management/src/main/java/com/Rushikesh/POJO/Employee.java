@@ -5,9 +5,12 @@ import java.util.Scanner;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Transient;
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Employee {
 	
 	static String companyName;
@@ -112,6 +115,17 @@ public abstract class Employee {
 	    System.out.println("Salary: " + basicSalary);
 	    System.out.println("Location: " + location);
 	    System.out.println();
+	}
+	
+	@Override
+	public String toString() {
+		return "Employee [sc=" + sc + ", employeeId=" + employeeId + ", employeeName=" + employeeName
+				+ ", totalExperiance=" + totalExperiance + ", designation=" + designation + ", basicSalary="
+				+ basicSalary + ", location=" + location + "]";
+	}
+
+	public double calculateSalary() {
+	    return basicSalary;
 	}
 	
 }

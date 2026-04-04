@@ -20,4 +20,9 @@ public class Admin extends Employee {
 	           "Admin Details:\n" +
 	           "=========================\n";
 	}
+	
+	@Override
+	public double calculateSalary() {
+	    return basicSalary + 1000; // fixed admin bonus
+	}
 }
